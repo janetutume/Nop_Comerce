@@ -1,0 +1,37 @@
+describe('template spec', () => {
+  it('Acessar URL com sucesso', () => {
+    cy.visit('https://automationexercise.com')
+    cy.get('div[class="logo pull-left"]').should('be.visible')
+    cy.title().should('be.eq', 'Automation Exercise')
+  })
+
+  it.only('Cadastro novo usuário', () => {
+    cy.visit('https://automationexercise.com')
+    cy.get('div[class="logo pull-left"]').should('be.visible')
+    cy.title().should('be.eq', 'Automation Exercise')
+    cy.get('a').contains(' Signup / Login').click()
+    cy.get('input[name = "name"]').should('be.visible').type("Ana Banana")
+    cy.get('input[data-qa="signup-email"]').should('be.visible').type("anabanana@gmail.com")
+    cy.get('button').contains('Signup').click()
+    cy.get('h2').contains('Enter Account Information').should('be.visible')
+    cy.get("#email").should('have.value','anabanana@gmail.com')
+    cy.get('#password').type('teste123')
+    cy.get('#days').select('13')
+    cy.get('#months').select('February')
+    cy.get('#years').select('2000')
+    cy.get("#first_name").type("Ana")
+    cy.get("#last_name").type("Banana")
+    cy.get("#address1").type("Rua teste")
+    cy.get("#country").select('United States')
+    cy.get("#state").type("Arizona")
+    cy.get("#city").type("Phoenix")
+    cy.get("#zipcode").type("85001")
+    cy.get("#mobile_number").type("12345678")
+    cy.get("button").contains("Create Account").click()
+
+    // Validação
+    cy.get('h2[data-qa="account-created"]').should('be.visible')
+    cy.get('h2[data-qa="account-created"]').should('have.text', "Account Created!")
+    cy.get('[data-qa="continue-button"]').should('be.visible')
+  })
+})
